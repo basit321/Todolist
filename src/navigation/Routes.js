@@ -1,0 +1,11 @@
+const Routes = {
+    // EXAMPLE: require("your path") | File
+    SPLASH_SCREEN: 'SPLASH_SCREEN',
+    LOGIN_SCREEN: 'LOGIN_SCREEN',
+    SIGNUP_SCREEN: 'SIGNUP_SCREEN',
+    HOME_SCREEN: 'HOME_SCREEN',
+    CREATE_TASK: 'CREATE_TASK',
+    DASHBOARD_STACK: 'DASHBOARD_STACK',
+    AUTH_STACK: 'AUTH_STACK'
+}
+export default Routes

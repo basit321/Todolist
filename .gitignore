@@ -1,0 +1,76 @@
+# Dependencies
+/node_modules
+/.pnp
+.pnp.js
+
+# iOS
+## Xcode
+/ios/build/
+/ios/DerivedData
+/ios/*.xcworkspace
+/ios/*.xcodeproj
+/*.gcno
+/*.hmap
+/*.swp
+/*.lock
+*.ipa
+*.dSYM.zip
+*.dSYM
+
+# Android
+/android/app/build
+/android/.gradle
+/android/build
+/android/captures
+*.keystore
+*.jks
+
+# BUCK
+buck-out/
+.buckd/
+.buckconfig.local
+.buckversion
+.fakebuckversion
+
+# Watchman
+/.watchmanconfig
+.watchman-cookie
+
+# Fastlane
+**/fastlane/report.xml
+**/fastlane/Preview.html
+**/fastlane/screenshots
+**/fastlane/test_output
+fastlane/.env
+
+# Detox
+detox_artifacts/
+*.hprof
+log/
+
+# Yarn / NPM
+yarn-debug.log*
+yarn-error.log*
+npm-debug.log*
+yarn.lock
+package-lock.json
+
+# Misc
+.expo
+.idea/
+.vscode/
+.env
+.env.local
+.env.development.local
+.env.test.local
+.env.production.local
+*.log
+*.tar.gz
+*.zip
+*.pyc
+*.swp
+.DS_Store
+.TemporaryItems
+.Trashes
+ehthumbs.db
+Thumbs.db
