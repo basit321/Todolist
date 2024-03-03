@@ -225,7 +225,7 @@ useEffect(() => {
                  <Text style={styles.taskDes}>
                     {moment.unix(item?.createdAt).fromNow()}
                     </Text> 
-                    <Text style={{...styles.taskDes,marginTop:UtilityMethods.hp(1.5),
+                    <Text style={{...styles.taskDes,marginTop:"2%",
                    
                     }} numberOfLines={1} >
                     {item?.description}
