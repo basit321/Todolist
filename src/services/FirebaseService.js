@@ -3,6 +3,8 @@
 
 import auth from "@react-native-firebase/auth";
 import firestore from "@react-native-firebase/firestore";
+import dynamicLinks from '@react-native-firebase/dynamic-links';
+
 import {
   COLLECTION_TASKS
 } from "./FirebaseConstants";
@@ -130,6 +132,34 @@ class FirebaseServices {
       return { isSuccess: false, response: null, message: error.message };
     }
   }
+
+  // ---------------------------- Dynamic Links ---------------------------- //
+
+  createDynamicLink = async (id) => {
+    try {
+      const link = await dynamicLinks().buildShortLink({
+        link: `https://mytodolist.page.link/userId=${id}`,
+        domainUriPrefix: 'https://mytodolist.page.link',
+        android: {
+          packageName: 'com.todolist',
+        },
+        ios: {
+          bundleId: 'com.todolist',
+        },
+      });
+      return {
+        isSuccess: true,
+        response: link,
+        message: "Dynamic Link created successfully",
+      };
+    } catch (error) {
+      console.log("createDynamicLink (Error) ==> ", error);
+      return { isSuccess: false, response: null, message: error.message };
+    }
+  }
+
+  // ---------------------------- Dynamic Links ---------------------------- //
+  
   
   
   

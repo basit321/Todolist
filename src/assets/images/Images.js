@@ -9,6 +9,7 @@ FILTER: require('./filter.png'),
 MENU: require('./dots.png'),
 CLOSE: require('./remove.png'),
 PLUS: require('./plus.png'),
+SHARE: require('./share.png'),
 }
 
 export default Images

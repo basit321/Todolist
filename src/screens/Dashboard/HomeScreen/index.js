@@ -2,7 +2,7 @@ import { useIsFocused } from '@react-navigation/native';
 import LottieView from "lottie-react-native";
 import moment from 'moment';
 import React, { useEffect, useState } from 'react';
-import { Alert, FlatList, Image, Switch, Text, TouchableOpacity, View } from 'react-native';
+import { Alert, FlatList, Image, Switch, Text, TouchableOpacity, View,Share, Platform } from 'react-native';
 import { useDispatch, useSelector } from 'react-redux';
 
 import { Animations, Colors, Images } from '../../../assets';
@@ -19,6 +19,9 @@ const HomeScreen = ({navigation}) => {
 
     const dispatch = useDispatch();
     const isFocused = useIsFocused();
+    const  link = useSelector(state => state.deepLink.link)
+
+    
     const [tasks,setTasks]=useState([])
     const [loading,setLoading]=useState(true)
     const [FilteredTasks,setFilteredTasks]=useState([])
@@ -31,7 +34,26 @@ const HomeScreen = ({navigation}) => {
 /// To get all tasks of user//
 useEffect(() => {
     const getTasks = async () => {
-    if (isFocused&&userData) {
+   if(link)
+   {
+    setLoading(true)
+    const getId = link.url.split("=").pop()
+    console.log("getId",getId)
+    const data = await  FirebaseService.getTasks(getId)
+    if (data.isSuccess) {
+        setLoading(false)
+         
+        setTasks(data.response)
+        setFilteredTasks(data.response)
+    }
+    else
+    {
+        setTasks([])
+        setFilteredTasks([])
+        setLoading(false)
+   }
+    }
+   else  if (isFocused&&userData) {
         setLoading(true)
         const data = await  FirebaseService.getTasks(userData?.id)
         if (data.isSuccess) {
@@ -50,7 +72,7 @@ useEffect(() => {
     }
     }
     getTasks()
-}, [userData,isFocused])
+}, [userData,isFocused,link])
 
 
 /// Menu Data for Task Menu//
@@ -71,6 +93,23 @@ useEffect(() => {
                 setSortMenuModal(true)
             }
         },
+
+
+        ...(
+            Platform.OS === 'android' ? [{
+                id: 3, // Changed id to be unique
+                title: "Share",
+                icon: Images.SHARE,
+                onPress: async () => {
+                    const res = await FirebaseService.createDynamicLink(userData?.id)
+                    if(res.isSuccess) {
+                        Share.share({
+                            message: res.response,
+                        });
+                    }
+                }
+            }] : []
+        ),
 
     
     ]
@@ -175,7 +214,7 @@ useEffect(() => {
         <View style={styles.header}>
         <View style={styles.rowView}>
         <Text style={styles.title}>
-            My Tasks
+            {link?"User's Tasks": "My Tasks"}
         </Text>
         <TouchableOpacity style={styles.logoutButton} onPress={() => logout()}>
            <Image source={Images.LOGOUT} style={styles.logoutIcon}/>
@@ -184,7 +223,7 @@ useEffect(() => {
         </View> 
 
         <View style={styles.body}>
-
+      {link ?null:
         <View style={styles.MenuRow}>
             {
                 Menu.map((item,index)=>{
@@ -202,7 +241,8 @@ useEffect(() => {
             }
 
             </View>
-        {FilteredTasks.length>0&&
+        }
+        {FilteredTasks.length==0|| link?null:
         <TouchableOpacity style={styles.addTask}
         onPress={()=>{
             navigation.navigate(Routes.CREATE_TASK)
@@ -290,10 +330,10 @@ useEffect(() => {
     {loading?null:<>
  <LottieView  style={styles.emptyCart} source={Animations.EMPTY_LIST} autoPlay loop />
     <Text style={styles.emptyText}>
-    Oh! You haven't made any tasks yet.
+  {link?"User did not have any active tasks": "Oh! You haven't made any tasks yet"}
  </Text>
 
-
+{link?null:
  <Button
         label="Add Task"
         onPress={
@@ -307,6 +347,7 @@ useEffect(() => {
         height:UtilityMethods.hp(6),
         }}
         />
+    }
       
 </>
     }

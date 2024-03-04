@@ -2,6 +2,7 @@ import { configureStore } from "@reduxjs/toolkit";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { persistReducer, persistStore } from "redux-persist";
 import authReducer from "./Reducers/AuthReducer";
+import DeepLinkReducer from "./Reducers/DeepLinkReducer";
 
 
 const config = {
@@ -12,6 +13,7 @@ const config = {
 export const store = configureStore({
     reducer: {
         auth: persistReducer({ ...config }, authReducer),
+        deepLink: DeepLinkReducer,
     },
     middleware: (getDefaultMiddleware) =>
         getDefaultMiddleware({

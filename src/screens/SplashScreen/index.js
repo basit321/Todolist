@@ -8,7 +8,11 @@ import Routes from '../../navigation/Routes'
 
 const SplashScreen = ({navigation}) => {
     let isLogin = useSelector(state => state.auth?.user)
+ 
+
+   
     useEffect(() => {
+        
         setTimeout(() => {
             if (isLogin) {
                 navigation.reset({
@@ -23,7 +27,8 @@ const SplashScreen = ({navigation}) => {
             }
         }, 2000)
     }
-    )
+    ), [isLogin]
+
   return (
     <View style={styles.container}>
 

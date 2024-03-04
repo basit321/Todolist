@@ -1,5 +1,5 @@
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
-import React from 'react';
+import React, { useEffect } from 'react';
 import { useSelector } from 'react-redux';
 import { AuthStack, DashboardStack } from './Stacks';
 import Routes from './Routes';
@@ -7,6 +7,8 @@ import SplashScreen from '../screens/SplashScreen';
 
 const Stack = createNativeStackNavigator();
 const RootStack = () => {
+
+    
   
     return (
         <Stack.Navigator screenOptions={{
